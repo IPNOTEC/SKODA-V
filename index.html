@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SKODA | Valentine's Executive Experience</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: system-ui, Segoe UI, Arial, sans-serif;
+      background: #0b0b0b;
+      color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .app {
+      width: 100%;
+      max-width: 460px;
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(255, 0, 0, 0.25);
+    }
+    
+    header {
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(180deg, #1a0000, #0b0b0b);
+      border-bottom: 1px solid #2a2a2a;
+      position: relative;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 1px;
+      color: #ff4d4d;
+    }
+    
+    header p {
+      margin: 6px 0 0;
+      font-size: 12px;
+      color: #bbb;
+    }
+    
+    .valentine-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #c40000;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    
+    .screen {
+      display: none;
+      padding: 22px;
+      animation: fade 0.4s ease;
+    }
+    
+    .screen.active {
+      display: block;
+    }
+    
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h2 {
+      font-size: 16px;
+      margin: 0 0 14px;
+      color: #fff;
+    }
+    
+    p {
+      font-size: 13px;
+      line-height: 1.55;
+      color: #ddd;
+      margin-bottom: 12px;
+    }
+    
+    .cta {
+      margin-top: 18px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      background: #c40000;
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.2s ease;
+    }
+    
+    .cta:hover {
+      background: #e60000;
+      transform: translateY(-2px);
+    }
+    
+    .cta.secondary {
+      background: transparent;
+      color: #bbb;
+      border: 1px solid #333;
+    }
+    
+    .cta.secondary:hover {
+      background: #222;
+      border-color: #444;
+    }
+    
+    .cta.success {
+      background: #006600;
+    }
+    
+    .cta.success:hover {
+      background: #008800;
+    }
+    
+    .cta:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .cta:disabled:hover {
+      background: #c40000;
+      transform: none;
+    }
+    
+    .box {
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+    
+    .box-highlight {
+      border-color: #c40000;
+      background: rgba(196, 0, 0, 0.05);
+    }
+    
+    .check {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .check input {
+      margin-top: 3px;
+    }
+    
+    .small {
+      font-size: 12px;
+      color: #aaa;
+    }
+    
+    .timer {
+      text-align: center;
+      font-size: 22px;
+      letter-spacing: 2px;
+      margin: 20px 0;
+      padding: 14px;
+      border-radius: 12px;
+      background: #000;
+      border: 1px solid #ff4d4d;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .reveal {
+      text-align: center;
+      font-size: 22px;
+      margin-top: 20px;
+      color: #00ff6a;
+      font-weight: 700;
+    }
+    
+    .input-group {
+      margin-bottom: 18px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+      color: #bbb;
+    }
+    
+    .input-group input, .input-group select {
+      width: 100%;
+      padding: 12px;
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: white;
+      font-size: 14px;
+    }
+    
+    .input-group input:focus, .input-group select:focus {
+      outline: none;
+      border-color: #c40000;
+    }
+    
+    .couple-option {
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
+    .couple-option:hover {
+      border-color: #555;
+    }
+    
+    .couple-option.selected {
+      border-color: #c40000;
+      background: rgba(196, 0, 0, 0.1);
+    }
+    
+    .leaderboard {
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 14px 0;
+    }
+    
+    .leaderboard h3 {
+      text-align: center;
+      margin-bottom: 14px;
+      color: #ff4d4d;
+    }
+    
+    .leaderboard table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    
+    .leaderboard th {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #333;
+      color: #bbb;
+    }
+    
+    .leaderboard td {
+      padding: 8px;
+      border-bottom: 1px solid #222;
+    }
+    
+    .leaderboard tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .status-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 600;
+    }
+    
+    .status-completed {
+      background: rgba(0, 102, 0, 0.2);
+      color: #00cc66;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    
+    .stat-item {
+      background: #0f0f0f;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .stat-item strong {
+      display: block;
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    
+    .car-reveal {
+      text-align: center;
+      padding: 20px;
+      background: #0f0f0f;
+      border-radius: 12px;
+      margin: 20px 0;
+      border: 2px solid #c40000;
+    }
+    
+    .car-image {
+      width: 100%;
+      max-width: 300px;
+      height: auto;
+      border-radius: 8px;
+      margin: 14px 0;
+      border: 1px solid #333;
+    }
+    
+    .heart {
+      color: #ff4d4d;
+    }
+    
+    .footer-note {
+      text-align: center;
+      padding: 14px;
+      font-size: 11px;
+      color: #666;
+      border-top: 1px solid #2a2a2a;
+      margin-top: 20px;
+    }
+    
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #c40000;
+      animation: confetti-fall 5s linear infinite;
+    }
+    
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(1000px) rotate(720deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <header>
+    <div class="valentine-badge">Feb 14 Only</div>
+    <h1>SKODA | Valentine's Executive Experience</h1>
+    <p>An Exclusive Partnership Discovery Program</p>
+    <div class="timer" id="headerTimer">14:14:14 - Experience Launch</div>
+  </header>
+
+  <!-- Screen 1: Landing -->
+  <div class="screen active" id="s1">
+    <h2>Executive Partnership Discovery</h2>
+    <p>Welcome to SKODA's exclusive Valentine's Executive Experience.</p>
+    <p>This is <strong>NOT</strong> a lottery, raffle, or guaranteed prize program.</p>
+    <p>This is an experiential commerce program for qualified professionals.</p>
+    
+    <div class="box box-highlight">
+      <p style="color: #ff4d4d; font-weight: 600;">Program Requirements:</p>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <strong>₹70,000</strong>
+          <span class="small">Experience Fee (Per Person)</span>
+        </div>
+        <div class="stat-item">
+          <strong>Non-Refundable</strong>
+          <span class="small">Regardless of outcome</span>
+        </div>
+        <div class="stat-item">
+          <strong>Vehicle Required</strong>
+          <span class="small">All participants must buy SKODA</span>
+        </div>
+        <div class="stat-item">
+          <strong>Priority for Couples</strong>
+          <span class="small">Registered or unregistered</span>
+        </div>
+      </div>
+    </div>
+    
+    <p><strong>Important:</strong> By participating, you agree to purchase a SKODA vehicle today.</p>
+    <p>Fastest payments receive priority consideration for special assignments.</p>
+    
+    <div class="button-group">
+      <button class="cta" onclick="nextScreen(2)">I Accept & Proceed</button>
+      <button class="cta secondary" onclick="exitProgram()">Exit Program</button>
+    </div>
+    
+    <div class="footer-note">
+      Terms: ₹70,000 is an experience fee. Vehicle purchase required. No guarantees.
+    </div>
+  </div>
+
+  <!-- Screen 2: Partner Registration -->
+  <div class="screen" id="s2">
+    <h2>Partnership Registration</h2>
+    <p>Are you participating as an individual or as a couple?</p>
+    <p>Couples (registered or unregistered) receive priority consideration.</p>
+    
+    <div class="couple-option" id="coupleOption" onclick="selectCoupleOption(true)">
+      <span class="heart">♥</span> <strong>We are a Couple</strong>
+      <p class="small">Both partners present. Priority assignment eligibility.</p>
+    </div>
+    
+    <div class="couple-option" onclick="selectCoupleOption(false)">
+      <strong>Individual Participant</strong>
+      <p class="small">Participating alone. Standard assignment process.</p>
+    </div>
+    
+    <div id="coupleFields" style="display: none; margin-top: 16px;">
+      <div class="input-group">
+        <label>Couple Type</label>
+        <select id="coupleType">
+          <option value="registered">Registered (Married)</option>
+          <option value="unregistered">Unregistered Partnership</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label>Full Name</label>
+      <input type="text" id="participantName" placeholder="Enter your full name">
+    </div>
+    
+    <div class="input-group">
+      <label>Email Address</label>
+      <input type="email" id="participantEmail" placeholder="Enter your email">
+    </div>
+    
+    <div class="input-group">
+      <label>Mobile Number</label>
+      <input type="tel" id="participantMobile" placeholder="Enter 10-digit mobile number">
+    </div>
+    
+    <div class="check">
+      <input type="checkbox" id="agreeTerms">
+      <label for="agreeTerms" class="small">I agree to purchase a SKODA vehicle today, regardless of experience outcome</label>
+    </div>
+    
+    <div class="check">
+      <input type="checkbox" id="agreePayment">
+      <label for="agreePayment" class="small">I understand ₹70,000 is non-refundable and is an experience fee</label>
+    </div>
+    
+    <div class="button-group">
+      <button class="cta" onclick="registerParticipant()" id="registerBtn" disabled>Register & Proceed to Payment</button>
+      <button class="cta secondary" onclick="prevScreen(1)">Go Back</button>
+    </div>
+  </div>
+
+  <!-- Screen 3: Payment & Leaderboard -->
+  <div class="screen" id="s3">
+    <h2>Payment Gateway & Live Leaderboard</h2>
+    <p>Complete your ₹70,000 experience fee payment.</p>
+    <p>Fastest payments receive priority assignment consideration.</p>
+    
+    <div class="timer" id="paymentTimer">
+      Scan: <span id="scanTime">14:14:14</span><br>
+      Received: <span id="receivedTime">--:--:--</span>
+    </div>
+    
+    <div class="leaderboard">
+      <h3>Live Leaderboard - Fastest Transfers</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Participant</th>
+            <th>Time</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Will be populated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="box">
+      <p style="color: #ff4d4d; font-weight: 600;">Your Payment Options</p>
+      <div style="text-align: center; margin: 16px 0;">
+        <button class="cta success" onclick="simulatePayment('UPI')" style="margin: 6px;">Pay via UPI</button>
+        <button class="cta success" onclick="simulatePayment('Card')" style="margin: 6px;">Pay via Card</button>
+        <button class="cta success" onclick="simulatePayment('NetBanking')" style="margin: 6px;">Net Banking</button>
+      </div>
+      <p class="small" style="text-align: center;">Average processing time: 45 seconds</p>
+    </div>
+    
+    <div class="button-group">
+      <button class="cta secondary" onclick="prevScreen(2)">Go Back</button>
+      <button class="cta secondary" onclick="simulatePayment('Test')">Test Mode (Instant)</button>
+    </div>
+  </div>
+
+  <!-- Screen 4: Assignment Result -->
+  <div class="screen" id="s4">
+    <h2>Experience Outcome</h2>
+    
+    <div id="resultContent">
+      <!-- Will be populated by JavaScript -->
+    </div>
+    
+    <div id="assignmentResult" style="display: none;">
+      <div class="car-reveal">
+        <h3 style="color: #ff4d4d; margin-bottom: 16px;">🎉 Special Assignment Awarded! 🎉</h3>
+        <p>Congratulations! Based on your prompt payment and partnership status, you've been selected for the Executive Fleet Program.</p>
+        
+        <div id="carImageContainer">
+          <!-- Car image will be loaded here -->
+        </div>
+        
+        <div style="margin-top: 20px; padding: 16px; background: #0f0f0f; border-radius: 8px; border: 1px solid #333;">
+          <p style="color: #ff4d4d; font-weight: 600; margin-bottom: 10px;">Your Special Assignment Terms:</p>
+          <p class="small"><strong>Vehicle:</strong> SKODA Kodiaq L&K</p>
+          <p class="small"><strong>Initial Participation:</strong> ₹1,40,000</p>
+          <p class="small"><strong>Monthly Lease:</strong> ₹14,000 × 60 months</p>
+          <p class="small"><strong>Lease Rate:</strong> 14% p.a. (Corporate Structured)</p>
+          <p class="small"><strong>Note:</strong> Mr. Bharath's vehicle is under separate long-term corporate policy as Program Curator.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div id="standardResult" style="display: none;">
+      <div style="padding: 20px; background: #0f0f0f; border-radius: 12px; text-align: center; border: 1px solid #333;">
+        <h3>Executive Experience Complete</h3>
+        <p>Thank you for participating in the SKODA Valentine's Executive Experience.</p>
+        <p>As per program terms, you are now eligible for:</p>
+        
+        <div style="background: #000; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #444;">
+          <h4 style="color: #ff4d4d;">14% Discount on SKODA Purchase</h4>
+          <p class="small">Your ₹70,000 experience fee qualifies you for an exclusive 14% discount on any available SKODA vehicle.</p>
+          <p class="small">Proceed to the showroom to complete your purchase from available stock.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="button-group">
+      <button class="cta" onclick="nextScreen(5)" id="nextStepBtn">Proceed to Next Step</button>
+    </div>
+  </div>
+
+  <!-- Screen 5: Final Step -->
+  <div class="screen" id="s5">
+    <h2>Program Completion</h2>
+    
+    <div style="text-align: center; margin: 20px 0;">
+      <div style="font-size: 48px; color: #ff4d4d; margin: 10px 0;">✓</div>
+      <h3>Experience Successfully Completed</h3>
+    </div>
+    
+    <div class="box">
+      <p style="color: #ff4d4d; font-weight: 600; margin-bottom: 12px;">Summary of Your Journey:</p>
+      <p class="small"><strong>Participation Fee:</strong> ₹70,000 (Experience Access)</p>
+      <p class="small"><strong>Payment Time:</strong> <span id="finalTimeDisplay"></span></p>
+      <p class="small"><strong>Rank:</strong> #<span id="finalRankDisplay"></span> on Leaderboard</p>
+      <p class="small"><strong>Outcome:</strong> <span id="finalOutcomeDisplay"></span></p>
+      <p class="small"><strong>Next Action:</strong> <span id="finalActionDisplay"></span></p>
+    </div>
+    
+    <div class="box">
+      <p style="color: #ff4d4d; font-weight: 600; margin-bottom: 12px;">Program Statistics (Live)</p>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <strong id="totalParticipants">0</strong>
+          <span class="small">Total Participants</span>
+        </div>
+        <div class="stat-item">
+          <strong id="couplesCount">0</strong>
+          <span class="small">Couples Participated</span>
+        </div>
+        <div class="stat-item">
+          <strong id="specialAssignments">0</strong>
+          <span class="small">Special Assignments</span>
+        </div>
+        <div class="stat-item">
+          <strong>2</strong>
+          <span class="small">Cars Available</span>
+        </div>
+      </div>
+    </div>
+    
+    <p class="small" style="margin-top: 20px; font-style: italic; text-align: center;">
+      "The fastest two couples who complete payment will receive special vehicle assignments.<br>
+      All other participants receive 14% discount on SKODA purchase as per showroom contracts."
+    </p>
+    
+    <div class="button-group">
+      <button class="cta" onclick="restartExperience()">Start New Experience</button>
+      <button class="cta secondary" onclick="viewTerms()">View Complete Terms</button>
+    </div>
+    
+    <div class="footer-note">
+      This is an experiential commerce simulation. All data is simulated for demonstration purposes.
+    </div>
+  </div>
+</div>
+
+<script>
+  // State management
+  const state = {
+    currentScreen: 1,
+    participantData: {
+      name: '',
+      email: '',
+      mobile: '',
+      isCouple: false,
+      coupleType: 'unregistered',
+      scanTime: null,
+      paymentTime: null,
+      rank: 0,
+      paymentMethod: '',
+      assignmentType: 'standard' // 'special' or 'standard'
+    },
+    leaderboard: [],
+    programStats: {
+      totalParticipants: 0,
+      couplesCount: 0,
+      specialAssignments: 0
+    }
+  };
+  
+  // Car data
+  const cars = [
+    { name: "SKODA Kodiaq L&K", image: "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&auto=format&fit=crop" },
+    { name: "SKODA Superb L&K", image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&auto=format&fit=crop" },
+    { name: "SKODA Kushaq", image: "https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=600&auto=format&fit=crop" }
+  ];
+  
+  // Initialize
+  document.addEventListener('DOMContentLoaded', function() {
+    updateHeaderTimer();
+    updateLeaderboard();
+    simulateOtherParticipants();
+    
+    // Update input validation
+    document.getElementById('participantName').addEventListener('input', validateRegistration);
+    document.getElementById('participantEmail').addEventListener('input', validateRegistration);
+    document.getElementById('participantMobile').addEventListener('input', validateRegistration);
+    document.getElementById('agreeTerms').addEventListener('change', validateRegistration);
+    document.getElementById('agreePayment').addEventListener('change', validateRegistration);
+  });
+  
+  // Navigation functions
+  function nextScreen(screenNumber) {
+    document.querySelectorAll('.screen').forEach(screen => {
+      screen.classList.remove('active');
+    });
+    document.getElementById(`s${screenNumber}`).classList.add('active');
+    state.currentScreen = screenNumber;
+    
+    if (screenNumber === 3) {
+      // Start payment timer
+      state.participantData.scanTime = new Date();
+      updatePaymentTimer();
+    }
+    
+    if (screenNumber === 4) {
+      showAssignmentResult();
+    }
+    
+    if (screenNumber === 5) {
+      updateFinalDisplay();
+      updateProgramStats();
+    }
+  }
+  
+  function prevScreen(screenNumber) {
+    nextScreen(screenNumber);
+  }
+  
+  // Update header timer
+  function updateHeaderTimer() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    
+    document.getElementById('headerTimer').textContent = `${h}:${m}:${s} - Experience Launch`;
+    
+    setTimeout(updateHeaderTimer, 1000);
+  }
+  
+  // Couple selection
+  function selectCoupleOption(isCouple) {
+    state.participantData.isCouple = isCouple;
+    document.getElementById('coupleOption').classList.toggle('selected', isCouple);
+    document.getElementById('coupleFields').style.display = isCouple ? 'block' : 'none';
+    validateRegistration();
+  }
+  
+  // Registration validation
+  function validateRegistration() {
+    const name = document.getElementById('participantName').value.trim();
+    const email = document.getElementById('participantEmail').value.trim();
+    const mobile = document.getElementById('participantMobile').value.trim();
+    const agreeTerms = document.getElementById('agreeTerms').checked;
+    const agreePayment = document.getElementById('agreePayment').checked;
+    
+    const isValid = name.length > 0 && 
+                   email.includes('@') && 
+                   mobile.length >= 10 && 
+                   agreeTerms && 
+                   agreePayment;
+    
+    document.getElementById('registerBtn').disabled = !isValid;
+  }
+  
+  // Register participant
+  function registerParticipant() {
+    state.participantData.name = document.getElementById('participantName').value.trim();
+    state.participantData.email = document.getElementById('participantEmail').value.trim();
+    state.participantData.mobile = document.getElementById('participantMobile').value.trim();
+    state.participantData.coupleType = document.getElementById('coupleType').value;
+    
+    if (state.participantData.isCouple) {
+      state.programStats.couplesCount++;
+    }
+    
+    nextScreen(3);
+  }
+  
+  // Payment simulation
+  function simulatePayment(method) {
+    state.participantData.paymentMethod = method;
+    state.participantData.paymentTime = new Date();
+    
+    // Calculate payment time difference
+    const scanTime = state.participantData.scanTime;
+    const paymentTime = state.participantData.paymentTime;
+    const timeDiff = paymentTime - scanTime;
+    const seconds = Math.floor(timeDiff / 1000);
+    
+    // Add to leaderboard
+    const entry = {
+      name: state.participantData.name,
+      time: `${seconds} seconds`,
+      isCouple: state.participantData.isCouple,
+      coupleType: state.participantData.coupleType,
+      method: method,
+      timestamp: new Date()
+    };
+    
+    state.leaderboard.push(entry);
+    state.programStats.totalParticipants++;
+    
+    // Sort leaderboard by time (fastest first)
+    state.leaderboard.sort((a, b) => {
+      const aTime = parseInt(a.time);
+      const bTime = parseInt(b.time);
+      return aTime - bTime;
+    });
+    
+    // Determine rank
+    state.participantData.rank = state.leaderboard.findIndex(entry => 
+      entry.name === state.participantData.name) + 1;
+    
+    // Determine assignment
+    if (state.participantData.isCouple && state.participantData.rank <= 2) {
+      state.participantData.assignmentType = 'special';
+      state.programStats.specialAssignments++;
+      addConfetti();
+    } else {
+      state.participantData.assignmentType = 'standard';
+    }
+    
+    // Update UI
+    updateLeaderboard();
+    updatePaymentTimer();
+    
+    // Show result after delay
+    setTimeout(() => {
+      nextScreen(4);
+    }, 1500);
+  }
+  
+  // Update leaderboard
+  function updateLeaderboard() {
+    const tbody = document.getElementById('leaderboardBody');
+    tbody.innerHTML = '';
+    
+    state.leaderboard.slice(0, 10).forEach((entry, index) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${entry.name} ${entry.isCouple ? '♥' : ''}</td>
+        <td>${entry.time}</td>
+        <td><span class="status-badge status-completed">Completed</span></td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+  
+  // Update payment timer
+  function updatePaymentTimer() {
+    const scanTime = state.participantData.scanTime;
+    const paymentTime = state.participantData.paymentTime;
+    
+    if (scanTime) {
+      document.getElementById('scanTime').textContent = 
+        scanTime.toLocaleTimeString('en-IN', { hour12: false });
+    }
+    
+    if (paymentTime) {
+      document.getElementById('receivedTime').textContent = 
+        paymentTime.toLocaleTimeString('en-IN', { hour12: false });
+    }
+  }
+  
+  // Show assignment result
+  function showAssignmentResult() {
+    const resultContent = document.getElementById('resultContent');
+    const assignmentResult = document.getElementById('assignmentResult');
+    const standardResult = document.getElementById('standardResult');
+    
+    if (state.participantData.assignmentType === 'special') {
+      // Special assignment
+      resultContent.innerHTML = `
+        <div style="text-align: center; padding: 16px;">
+          <h3 style="color: #ff4d4d;">🎉 Priority Assignment Secured! 🎉</h3>
+          <p class="small">Rank: #${state.participantData.rank} | Payment Time: ${state.leaderboard[state.participantData.rank - 1].time}</p>
+          <p>As one of the fastest two couples, you've qualified for the Executive Fleet Program.</p>
+        </div>
+      `;
+      
+      // Random car assignment
+      const randomCar = cars[Math.floor(Math.random() * cars.length)];
+      document.getElementById('carImageContainer').innerHTML = `
+        <img src="${randomCar.image}" alt="${randomCar.name}" class="car-image">
+        <p class="small" style="margin-top: 8px;">${randomCar.name}</p>
+      `;
+      
+      assignmentResult.style.display = 'block';
+      standardResult.style.display = 'none';
+    } else {
+      // Standard outcome
+      resultContent.innerHTML = `
+        <div style="text-align: center; padding: 16px;">
+          <h3>Executive Experience Complete</h3>
+          <p class="small">Rank: #${state.participantData.rank} | Payment Time: ${state.leaderboard[state.participantData.rank - 1]?.time || 'N/A'}</p>
+          <p>Thank you for your participation in the SKODA Valentine's Executive Experience.</p>
+        </div>
+      `;
+      
+      assignmentResult.style.display = 'none';
+      standardResult.style.display = 'block';
+    }
+  }
+  
+  // Update final display
+  function updateFinalDisplay() {
+    document.getElementById('finalTimeDisplay').textContent = 
+      state.leaderboard[state.participantData.rank - 1]?.time || 'N/A';
+    document.getElementById('finalRankDisplay').textContent = state.participantData.rank;
+    
+    if (state.participantData.assignmentType === 'special') {
+      document.getElementById('finalOutcomeDisplay').textContent = 'Special Assignment Awarded';
+      document.getElementById('finalActionDisplay').textContent = 'Proceed to corporate documentation';
+    } else {
+      document.getElementById('finalOutcomeDisplay').textContent = '14% Discount on SKODA Purchase';
+      document.getElementById('finalActionDisplay').textContent = 'Complete purchase from available stock';
+    }
+  }
+  
+  // Update program stats
+  function updateProgramStats() {
+    document.getElementById('totalParticipants').textContent = state.programStats.totalParticipants;
+    document.getElementById('couplesCount').textContent = state.programStats.couplesCount;
+    document.getElementById('specialAssignments').textContent = state.programStats.specialAssignments;
+  }
+  
+  // Simulate other participants
+  function simulateOtherParticipants() {
+    const names = ['Aarav Sharma', 'Priya Patel', 'Rohan Singh', 'Neha Gupta', 'Vikram Joshi', 'Ananya Reddy'];
+    const coupleNames = ['Arjun & Meera', 'Rahul & Sanya', 'Karan & Pooja'];
+    
+    // Add some simulated participants
+    setTimeout(() => {
+      const name = Math.random() > 0.5 ? 
+        names[Math.floor(Math.random() * names.length)] :
+        coupleNames[Math.floor(Math.random() * coupleNames.length)];
+      
+      const time = Math.floor(Math.random() * 60) + 30;
+      const isCouple = name.includes('&');
+      
+      state.leaderboard.push({
+        name: name,
+        time: `${time} seconds`,
+        isCouple: isCouple,
+        coupleType: isCouple ? 'registered' : null,
+        method: ['UPI', 'Card', 'NetBanking'][Math.floor(Math.random() * 3)],
+        timestamp: new Date()
+      });
+      
+      state.programStats.totalParticipants++;
+      if (isCouple) state.programStats.couplesCount++;
+      
+      updateLeaderboard();
+      
+      // Continue simulation
+      if (state.programStats.totalParticipants < 20) {
+        simulateOtherParticipants();
+      }
+    }, Math.random() * 5000 + 3000);
+  }
+  
+  // Restart experience
+  function restartExperience() {
+    // Reset participant data
+    state.participantData = {
+      name: '',
+      email: '',
+      mobile: '',
+      isCouple: false,
+      coupleType: 'unregistered',
+      scanTime: null,
+      paymentTime: null,
+      rank: 0,
+      paymentMethod: '',
+      assignmentType: 'standard'
+    };
+    
+    // Reset form
+    document.getElementById('participantName').value = '';
+    document.getElementById('participantEmail').value = '';
+    document.getElementById('participantMobile').value = '';
+    document.getElementById('agreeTerms').checked = false;
+    document.getElementById('agreePayment').checked = false;
+    document.getElementById('coupleOption').classList.remove('selected');
+    document.getElementById('coupleFields').style.display = 'none';
+    
+    // Go to first screen
+    nextScreen(1);
+  }
+  
+  // Exit program
+  function exitProgram() {
+    if (confirm('Are you sure you want to exit the Executive Experience?')) {
+      alert('Thank you for your interest. Please visit our showroom for regular SKODA offerings.');
+    }
+  }
+  
+  // View terms
+  function viewTerms() {
+    alert(`TERMS & CONDITIONS
+
+1. ₹70,000 is a non-refundable experience fee for participation in the SKODA Valentine's Executive Experience.
+
+2. All participants must purchase a SKODA vehicle on February 14th, regardless of experience outcome.
+
+3. Priority consideration given to couples (registered or unregistered).
+
+4. The fastest two couples who complete payment will receive special vehicle assignments under corporate lease terms.
+
+5. All other participants receive 14% discount on SKODA purchase from available stock.
+
+6. Mr. Bharath's vehicle assignment is under separate long-term corporate policy as Program Curator.
+
+7. This is experiential commerce, not gambling. No guarantees are provided.
+
+8. Showroom contracts apply for all vehicle purchases.
+
+9. All decisions are final and at the discretion of SKODA dealership management.`);
+  }
+  
+  // Add confetti effect
+  function addConfetti() {
+    const app = document.querySelector('.app');
+    for (let i = 0; i < 30; i++) {
+      const confetti = document.createElement('div');
+      confetti.className = 'confetti';
+      confetti.style.left = Math.random() * 100 + '%';
+      confetti.style.background = ['#c40000', '#ff4d4d', '#ff0000', '#990000'][Math.floor(Math.random() * 4)];
+      confetti.style.animationDelay = Math.random() * 5 + 's';
+      app.appendChild(confetti);
+      
+      setTimeout(() => {
+        confetti.remove();
+      }, 5000);
+    }
+  }
+</script>
+
+</body>
+</html>
